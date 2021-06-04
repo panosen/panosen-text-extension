@@ -1,0 +1,9 @@
+﻿"ZhangSan".ToLowerCaseUnderLine() => "zhang_san"
+
+"ZhangSan123".ToLowerCaseUnderLine() => "zhang_san_123"
+
+"ngram_3".ToLowerCaseUnderLine() => "ngram_3"
+
+"SSL".ToLowerCaseUnderLine() => "ssl"
+
+"SSL".ToLowerCamelCase() => "sSL"
