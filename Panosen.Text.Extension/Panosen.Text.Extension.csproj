@@ -10,6 +10,7 @@
     <DocumentationFile>bin\$(Configuration)\Panosen.Text.Extension.xml</DocumentationFile>
     <PackageIcon>panosen.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/panosen/panosen-text-extension</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
