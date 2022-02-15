@@ -17,7 +17,9 @@ namespace System
         /// </summary>
         public static string ToUpperCaseUnderLine(this string name)
         {
-            return ToLowerCaseUnderLine(name).ToUpper();
+            List<string> items = ToItems(name);
+
+            return string.Join("_", items).ToUpper();
         }
 
         /// <summary>
@@ -45,82 +47,17 @@ namespace System
         }
 
         /// <summary>
-        /// 拆分字符串
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private static List<string> ToItems(string name)
-        {
-            List<string> items = new List<string>();
-            StringBuilder item = new StringBuilder();
-
-            char? last = null;
-
-            for (int i = 0; i < name.Length; i++)
-            {
-                var ch = name[i];
-
-                if (ch >= 'A' && ch <= 'Z' && last != null && (last < 'A' || last > 'Z'))
-                {
-                    items.Add(item.ToString());
-                    item.Clear();
-
-                    item.Append((char)(ch + 32));
-                }
-                else if (ch >= '0' && ch <= '9' && last != null && (last < '0' || last > '9'))
-                {
-                    items.Add(item.ToString());
-                    item.Clear();
-
-                    item.Append(ch);
-                }
-                else if (ch == '_' || ch == '-')
-                {
-                    items.Add(item.ToString());
-                    item.Clear();
-                }
-                else
-                {
-                    item.Append(ch.ToString().ToLower());
-                }
-
-                last = ch;
-            }
-
-            items.Add(item.ToString());
-
-            items = items.Where(v => v.Length > 0).ToList();
-            return items;
-        }
-
-        /// <summary>
         /// 将数据库表名转换成实体名称
         /// 示例：student_score -> StudentScore
         /// </summary>
         public static string ToUpperCamelCase(this string name)
         {
-            bool toUpper = true;
+            var items = ToItems(name);
 
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < name.Length; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                var current = name[i];
-                if (current == '_')
-                {
-                    toUpper = true;
-                    continue;
-                }
-
-                if (toUpper && current >= 'a' && current <= 'z')
-                {
-                    builder.Append((char)(current - 32));
-                    toUpper = false;
-                }
-                else
-                {
-                    builder.Append(current);
-                    toUpper = false;
-                }
+                builder.Append(items[i][0].ToString().ToUpper() + items[i].Substring(1));
             }
 
             return builder.ToString();
@@ -132,7 +69,122 @@ namespace System
         /// </summary>
         public static string ToLowerCamelCase(this string name)
         {
-            return name[0].ToString().ToLower() + name.Substring(1);
+            var items = ToItems(name);
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (i == 0)
+                {
+                    builder.Append(items[i]);
+                }
+                else
+                {
+                    builder.Append(items[i][0].ToString().ToUpper() + items[i].Substring(1));
+                }
+            }
+
+            return builder.ToString();
+        }
+
+        private static CharType ToCharType(char ch)
+        {
+            if (ch >= 'A' && ch <= 'Z')
+            {
+                return CharType.UpperLetter;
+            }
+            if (ch >= 'a' && ch <= 'z')
+            {
+                return CharType.LowerLetter;
+            }
+            if (ch >= '0' && ch <= '9')
+            {
+                return CharType.Number;
+            }
+            if (ch == '-')
+            {
+                return CharType.BreakLine;
+            }
+            if (ch == '_')
+            {
+                return CharType.UnderLine;
+            }
+            return CharType.None;
+        }
+
+        /// <summary>
+        /// 拆分字符串
+        /// </summary>
+        private static List<string> ToItems(string text)
+        {
+            List<string> items = new List<string>();
+            StringBuilder builder = new StringBuilder();
+
+            Item lastItem = null;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                var currentItem = new Item { Ch = text[i], Type = ToCharType(text[i]) };
+
+                if (lastItem == null)
+                {
+                    builder.Append(currentItem.Ch);
+
+                    lastItem = currentItem;
+                    continue;
+                }
+
+                if (currentItem.Type == CharType.BreakLine || currentItem.Type == CharType.UnderLine)
+                {
+                    if (builder.Length > 0)
+                    {
+                        items.Add(builder.ToString().ToLower());
+                        builder.Clear();
+                    }
+
+                    lastItem = currentItem;
+                    continue;
+                }
+
+                if (lastItem.Type == CharType.LowerLetter && currentItem.Type == CharType.UpperLetter)
+                {
+                    items.Add(builder.ToString().ToLower());
+                    builder.Clear();
+
+                    builder.Append(currentItem.Ch);
+
+                    lastItem = currentItem;
+                    continue;
+                }
+
+                if (lastItem.Type == CharType.UpperLetter && currentItem.Type == CharType.LowerLetter)
+                {
+                    builder.Append(currentItem.Ch);
+
+                    lastItem = currentItem;
+                    continue;
+                }
+
+                if (lastItem.Type != currentItem.Type)
+                {
+                    items.Add(builder.ToString().ToLower());
+                    builder.Clear();
+
+                    builder.Append(currentItem.Ch);
+
+                    lastItem = currentItem;
+                    continue;
+                }
+
+                builder.Append(currentItem.Ch);
+
+                lastItem = currentItem;
+            }
+
+            items.Add(builder.ToString().ToLower());
+
+            items = items.Where(v => v.Length > 0).ToList();
+            return items;
         }
     }
 }
