@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net452;net472;netstandard2.0</TargetFrameworks>
     <AssemblyName>Panosen.Text.Extension</AssemblyName>
     <RootNamespace>Panosen.Text.Extension</RootNamespace>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>harriszhang@live.cn</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <DocumentationFile>bin\$(Configuration)\Panosen.Text.Extension.xml</DocumentationFile>
