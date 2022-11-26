@@ -17,6 +17,11 @@ namespace System
         /// </summary>
         public static string ToUpperCaseUnderLine(this string name)
         {
+            if (name == null)
+            {
+                return null;
+            }
+
             List<string> items = ToItems(name);
 
             return string.Join("_", items).ToUpper();
@@ -29,6 +34,11 @@ namespace System
         /// </summary>
         public static string ToLowerCaseUnderLine(this string name)
         {
+            if (name == null)
+            {
+                return null;
+            }
+
             List<string> items = ToItems(name);
 
             return string.Join("_", items);
@@ -41,6 +51,11 @@ namespace System
         /// </summary>
         public static string ToLowerCaseBreakLine(this string name)
         {
+            if (name == null)
+            {
+                return null;
+            }
+
             List<string> items = ToItems(name);
 
             return string.Join("-", items);
@@ -52,6 +67,11 @@ namespace System
         /// </summary>
         public static string ToUpperCamelCase(this string name)
         {
+            if (name == null)
+            {
+                return null;
+            }
+
             var items = ToItems(name);
 
             StringBuilder builder = new StringBuilder();
@@ -69,6 +89,11 @@ namespace System
         /// </summary>
         public static string ToLowerCamelCase(this string name)
         {
+            if (name == null)
+            {
+                return null;
+            }
+
             var items = ToItems(name);
 
             StringBuilder builder = new StringBuilder();
