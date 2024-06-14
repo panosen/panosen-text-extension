@@ -12,6 +12,8 @@
 
         UnderLine,
 
-        BreakLine
+        BreakLine,
+
+        Whitespace
     }
 }

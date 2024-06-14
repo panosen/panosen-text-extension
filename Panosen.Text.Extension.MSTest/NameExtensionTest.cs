@@ -73,6 +73,9 @@ namespace Panosen.Text.Extension.MSTest
 
             Assert.AreEqual("Ssl", "SSL".ToUpperCamelCase());
             Assert.AreEqual("Ssl", "ssl".ToUpperCamelCase());
+
+            Assert.AreEqual("ZhangSan", "zhang san".ToUpperCamelCase());
+            Assert.AreEqual("ZhangSan", "Zhang san".ToUpperCamelCase());
         }
 
         [TestMethod]

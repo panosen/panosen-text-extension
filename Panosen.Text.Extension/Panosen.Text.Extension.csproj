@@ -4,7 +4,7 @@
     <TargetFrameworks>net452;net472;netstandard2.0</TargetFrameworks>
     <AssemblyName>Panosen.Text.Extension</AssemblyName>
     <RootNamespace>Panosen.Text.Extension</RootNamespace>
-    <Version>1.3.1</Version>
+    <Version>1.3.2</Version>
     <Authors>harriszhang@live.cn</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <DocumentationFile>bin\$(Configuration)\Panosen.Text.Extension.xml</DocumentationFile>

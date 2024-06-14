@@ -134,6 +134,10 @@ namespace System
             {
                 return CharType.UnderLine;
             }
+            if (ch == ' ')
+            {
+                return CharType.Whitespace;
+            }
             return CharType.None;
         }
 
@@ -195,7 +199,10 @@ namespace System
                     items.Add(builder.ToString().ToLower());
                     builder.Clear();
 
-                    builder.Append(currentItem.Ch);
+                    if (currentItem.Type != CharType.Whitespace)
+                    {
+                        builder.Append(currentItem.Ch);
+                    }
 
                     lastItem = currentItem;
                     continue;
